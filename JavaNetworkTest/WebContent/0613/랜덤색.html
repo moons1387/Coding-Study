@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+
+<body>
+  <div>
+    랜덤색
+  </div><br>
+  <input type="button" id="ranColor" value="랜덤색">
+  <input type="button" value="setTimeout">
+  <input type="button" value="setInterval">
+  <input type="button" value="중지">
+
+  <script src="../js/random.js"></script>
+
+  <script>
+    let ranColor;
+    let timer; // 변수 선언
+    let inputs = document.querySelectorAll('input');
+    inputs[0].addEventListener('click', ranColor = function () {
+
+      let v_disp = document.querySelector('div');
+
+      // 10진수 랜덤 색 생성 rgb(0~255, 0~255, 0~255)
+      let random10 = []; // 10진수 색상정보 저장 영역
+      let random16 = []; // 16진수 색상정보 저장 영역
+
+      for (let i = 0; i < 3; i++) {
+        random10[i] = f_random(0, 255);
+        random16[i] = f_random(0, 255).toString(16);
+      }
+
+      v_disp.style.backgroundColor = "rgb(" + random10 + ")"; // 문자열로 합침
+      v_disp.style.color = "#" + random16.join(""); // 콤마 제거
+
+      timer = setTimeout(ranColor,2000);
+
+    });
+
+    // setTimeout은 함수 실행시간과는 별개로 고정적인 딜레이를 보장한다.
+    inputs[1].addEventListener('click', function () {
+      setTimeout(ranColor, 500);
+
+      // 한번 실행 후 버튼 비활성화 처리
+      inputs[0].setAttribute('disabled', 'true');
+      // inputs[0].disabled = true;
+      inputs[1].disabled = true;
+      inputs[2].disabled = true;
+    });
+
+    // setInterval은 지정된 ms(delay)에 함수의 실행시간이 포함되므로
+    // 함수 실행시간이 길어질 경우 실행간 딜레이 없이 다음 함수가 바로 실행되는 문제 발생 확률이 높음
+    inputs[2].addEventListener('click', function () {
+      setInterval(ranColor, 500);
+    });
+
+    inputs[3].addEventListener('click', function(){
+      clearTimeout(timer);
+      // 비활성화 버튼 복구
+      inputs[0].removeAttribute('disabled');
+      // inputs[0].disabled = false;
+      inputs[1].disabled = false;
+      inputs[2].disabled = false;
+    });
+
+
+  </script>
+</body>
+
+</html>
+
+
+<!-- <div style="background-color: rgb(19, 157, 205); color: rgb(200, 232, 167);">
+  랜덤색
+</div> -->

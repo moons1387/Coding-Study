@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+
+<body>
+  <div>랜덤색 표현하기</div>
+  <input type="button" id="ranColor" value="랜덤색">
+  <input type="button" value="중지">
+
+  <script src="../js/random.js"></script>
+  <script>
+    let timer;
+
+    // proxy pattern 대리 처리하여 로직의 흐름을 제어하는 행동패턴
+    let flag = false;
+    function f_proxy() {
+      if(!flag) {
+        // 버튼클릭 대신 호출
+        f_fnc();
+        flag = true;
+      }
+    }
+
+    document.querySelector('#ranColor').addEventListener('click', f_proxy); // 대리함수 호출
+
+    function f_fnc() {
+      let v_disp = document.querySelector('div');
+      let random10 = [];
+
+      for (let i = 0; i < 3; i++) {
+        random10[i] = f_random(0, 255);
+      }
+      v_disp.style.backgroundColor = "rgb(" + random10 + ")";
+
+      timer = setTimeout(f_fnc, 1500);
+    }
+
+    document.querySelector('input:last-of-type').addEventListener('click', function () {
+      flag = false;
+      clearTimeout(timer);
+      document.querySelector('input:nth-of-type(2)').setAttribute('enabled', true);
+    });
+
+  </script>
+</body>
+
+</html>

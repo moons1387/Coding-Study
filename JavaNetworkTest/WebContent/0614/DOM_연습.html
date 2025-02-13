@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+
+  <style>
+    div {
+      border-style: 3px solid gray;
+    }
+    img {
+      width: 100px;
+      height: 100px;
+      margin: 3px;
+    }
+    #parent {
+      font-size: 0;
+    }
+  </style>
+
+</head>
+<body>
+  <div id="parent">
+    <img src="../images/bara1.jpg" alt="br1">
+    <img src="../images/bara2.jpg" alt="br2">
+    <img src="../images/bara4.jfif" alt="br4">
+    <img src="../images/bara6.webp" alt="br6">
+  </div>
+
+  <input type="button" value="&lt;&lt" id="left">
+  <input type="button" value="&gt;&gt" id="right">
+
+  <script>
+    let v_parent = document.querySelector('#parent');
+
+    document.querySelector('#right').addEventListener('click', function(){
+      // console.log(v_parent.lastElementChild);
+      // console.log(v_parent.childNodes[v_parent.childNodes.length-2]);
+      // console.log(v_parent.children[v_parent.children.length-1]);
+      // console.log(v_parent.childNodes[7]);
+
+      // 맨뒤 노드를 앞으로 추가(=이동)
+      // insertBefore(값, 위치)
+      let last = v_parent.lastElementChild;
+      v_parent.insertBefore(last, v_parent.firstElementChild);
+    });
+
+    document.querySelector('#left').addEventListener('click', function(){
+      // console.log(v_parent.firstElementChild);
+      // console.log(v_parent.children[0]);
+      // console.log(v_parent.childNode[1]);
+
+      // 첫번째 노드를 잘라내어 뒤로 추가(=이동됨)
+      let first = v_parent.firstElementChild;
+      // 새로운 대상일 때는 추가, 기존 대상일때는 이동 기능 제공
+      v_parent.append(first); // append는 기본적으로 대상요소의 맨 뒤로 추가
+      console.log(first);
+    });
+
+  </script>
+
+</body>
+</html>

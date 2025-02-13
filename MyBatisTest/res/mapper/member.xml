@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	<!--
+		이 영역 SQL문에 맞는 태그를 사용하여 SQL문을 기술한다.
+		
+		사용할 수 있는 기본적인 태그들
+		<select> ~~ </select> 
+		<insert> ~~ </insert> 
+		<update> ~~ </update> 
+		<delete> ~~ </delete> 
+		
+		위 태그에서 사용되는 주요 속성들
+		
+		1) id(필수값) : 해당 SQL문을 호출할 때 namespace값과 연결하여 사용하는 쿼리이름
+		
+		2) parameterType : SQL문에 사용될 데이터를 담은 객체타입을 지정한다. => 생략 가
+						   (보통 VO클래스, 자바의 기본타입명 등이 사용된다.)
+						  
+		3) resultType : select문을 실행한 결과를 담기 위한 객체타입을 지정한다.
+					    (보통 VO클래스, 자바의 기본타입명 등이 사용된다.)
+					    
+		4) resultMap : 결과 레코드 컬럼명과 VO 객체의 property명이 다를 경우에 
+					   적절한 매핑작업을 위해 사용한다.   		
+	-->
+	<insert id="insertMember" parameterType="kr.or.ddit.member.vo.MemberVO">
+		INSERT INTO
+		MYMEMBER(MEM_ID, MEM_NAME, MEM_TEL, MEM_ADDR)
+		VALUES (#{memId}, #{memName}, #{memTel}, #{memAddr})
+
+	</insert>
+
+	<update id="updateMember" parameterType="kr.or.ddit.member.vo.MemberVO">
+		UPDATE MYMEMBER
+		SET MEM_NAME = #{memName}, MEM_TEL = #{memTel}, MEM_ADDR = #{memAddr}
+		WHERE MEM_ID = #{memId}
+
+	</update>
+
+	<delete id="deleteMember" parameterType="String">
+
+		DELETE FROM MYMEMBER WHERE MEM_ID = #{ID}
+
+	</delete>
+	
+	<select id="checkMember" resultType="int">
+		SELECT COUNT(*) CNT FROM MYMEMBER WHERE MEM_ID = #{MEMID}
+	</select>
+
+	<select id="selectAllMember" resultType="kr.or.ddit.member.vo.MemberVO">
+		SELECT MEM_ID MEMID, MEM_NAME MEMNAME, MEM_TEL MEMTEL, MEM_ADDR MEMADDR,
+		REG_DT FROM MYMEMBER
+
+	</select>
+
+	<select id="selectGetMember" resultType="kr.or.ddit.member.vo.MemberVO">
+		SELECT MEM_ID MEMID, MEM_NAME MEMNAME, MEM_TEL MEMTEL, MEM_ADDR MEMADDR,
+		REG_DT FROM MYMEMBER
+		WHERE MEM_ID = #{memId}
+
+	</select>
+
+	<select id="selectGetMember2" parameterType="Map" resultType="HashMap">
+		SELECT MEM_ID, MEM_NAME, MEM_TEL, MEM_ADDR, REG_DT
+		FROM MYMEMBER
+		WHERE MEM_ID = #{memId}
+
+	</select>
+
+	<select id="searchMember" resultType="kr.or.ddit.member.vo.MemberVO">
+		SELECT MEM_ID MEMID, MEM_NAME MEMNAME, MEM_TEL MEMTEL, MEM_ADDR MEMADDR,
+		REG_DT 
+		FROM MYMEMBER
+		<where>
+			<if test='memId != null and memId !=""'>
+				AND MEM_ID = #{memId}
+			</if>
+			<if test='memName != null and memName !=""'>
+				AND MEM_NAME =#{memName}
+			</if>
+			<if test='memTel != null and !memTel.equals("")'>
+				AND MEM_TEL = #{memTel}
+			</if>
+			<if test='memAddr != null and memAddr !=""'>
+				AND MEM_ADDR LIKE '%' || #{memAddr} || '%'
+			</if>
+		</where>
+
+	</select>
+
+</mapper>

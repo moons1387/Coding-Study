@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style>
+	p {
+		background-color: green;
+	}
+</style>
+
+</head>
+<body>
+	<input value="저스티스타이탄">
+	<input type="button" value="get">
+	<input type="button" value="post">
+	<div></div>
+
+	<script>
+		let inputs = document.querySelectorAll('input');
+		let v_div = document.querySelector('div');
+
+
+		inputs[2].addEventListener('click', function() {
+		let inputVal = inputs[0].value;
+			let req = new XMLHttpRequest();
+// 			req.open('post', 'test.jsp');
+			req.open('post', '/webPro/Ajax');
+			req.onreadystatechange = function() {
+				if (req.status == 200 && req.readyState == 4) {
+					// 요청에 대한 응답 확인
+					v_div.innerHTML = `<h1>${req.responseText}</h1>`;
+				}
+			}
+		
+// 			let data = `sendKey=${inputVal}`;
+// 			req.send("sendKey="+inputVal);
+// 			req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+// 			req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;');
+
+			// JSON 인코딩 형식으로 데이터 생성
+			let obj = {a:'apple', c:'carrot'};
+			let data = JSON.stringify(obj); // 겍체 => JSON문자열로 변환
+			req.setRequestHeader('Content-type', 'application/json;');
+			req.send(data);
+		});
+
+		inputs[1].addEventListener('click', function() {
+		let inputVal = inputs[0].value;
+			// AJAX문법
+			// 1. 객체생성
+			let req = new XMLHttpRequest();
+			// 2. 요청설정
+// 			req.open('get', 'test.jsp?sendKey=' + inputVal, true);
+			req.open('get', '/webPro/Ajax?sendKey=' + inputVal, true);
+			// 4. 응답받기
+			req.onreadystatechange = function() {
+				if (req.readyState == 4 && req.status == 200) {
+
+					let data = JSON.parse(req.responseText); // 문자열 => 객체로 변환
+					
+					console.log(data);
+					let rst = "<p style='color: red;'>" + data.name + "</p>";
+					
+					v_div.innerText = "";
+					v_div.insertAdjacentHTML('beforeend', rst);
+				}
+			}
+			// 3. 요청전달
+			req.send();
+		});
+	</script>
+
+</body>
+</html>

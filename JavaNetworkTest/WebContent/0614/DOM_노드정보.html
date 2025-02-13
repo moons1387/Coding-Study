@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    div {
+      border: 2px solid red;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="parent">
+    <span>div 안의 span1,</span>
+    <span>div 안의 span2,</span>
+    <span>div 안의 span3</span>
+  </div>
+  <pre>
+  [Node정보]
+    - nodeName        : 노드 고유의 이름 반환(읽기전용 속성/get만 가능)
+    - tagNeme         : 요소 이름 반환
+    - nodeValue, data : 노드의 값(요소 노드 내부의 text정보를 얻기 위해서는 textNode까지 접근되어야 함)
+    - textContent     : 노드의 값 반환(ElementNode까지만 접근해도 가능)
+    - nodeType        : 노드의 타입, 유형(읽기전용 속성/get만 가능)
+  </pre>
+  <script>
+    let v_parent = document.querySelector('#parent');
+    let v_child = document.querySelectorAll('span');
+    
+    console.log(v_parent.nodeName);
+    console.log(v_child[0].nodeName);
+    console.log(v_parent.tagName);
+    console.log(v_child[0].tagName);
+    
+    console.log(v_parent.childNodes[0].tagName);   // undefined
+    console.log(v_parent.childNodes[0].nodeName);  // #text
+    
+    console.log(v_parent.children[2].firstChild); // div안의 span3의 textNode
+    console.log(v_parent.children[2].firstChild.nodeValue); // div안의 span3
+    console.log(v_parent.children[2].firstChild.data); // div안의 span3
+    v_parent.children[2].firstChild.nodeValue = "값 변경"; // div안의 span3 -> 값 변경
+    v_parent.children[2].firstChild.data = "div안의 span3"; // 값 변경 -> div안의 span3 
+    
+    console.log(v_parent.children[2]); // div안의 span3의 elementNode
+    console.log(v_parent.children[2].textContent); // div안의 span3
+    v_parent.children[2].textContent = "값 다시변경"; // div안의 span3 -> 값 다시변경
+    
+    console.log(document.nodeType); // 9 - documentNode
+    console.log(v_parent.nodeType); // 1 - elementNode
+    console.log(v_parent.children[2].firstChild.nodeType); // 3 - textNode
+        
+    </script>
+</body>
+
+</html>

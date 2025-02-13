@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<input>
+	<button>버튼</button>
+	<div></div>
+<script
+  src="https://code.jquery.com/jquery-3.7.1.js"
+  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
+<script>
+
+	// jQuery 단축모드
+	// 에러를 제공하지 않기때문에 응답성공을 확신하는 경우에만 사용할 것을 권장
+	$.get('text.txt', function(res){
+		console.log("빠르게 결과 확인>",res);
+	});
+
+	$('button').on('click', function(){
+
+		// jQuery 방식 AJAX
+		$.ajax({
+			type: 'post', // type속성 및 method속성명으로 사용가능하며, get방식은 기본값으로 생략 가능
+			url: `/webPro/Ajax`, 
+	 		data: JSON.stringify({yujin:$('input').val()}), // json으로 파싱해서 보낼 때 content-type 생략 가능
+			success:function(res){
+				console.log("응답>>", typeof res);	
+				$('div').html(res);
+			},
+			error:function(xhr){
+				alert("오류상태: ",xhr.status);
+			}
+			, dataType: 'text'
+		})
+		
+	});
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+	<insert id="insertBoard" parameterType="kr.or.ddit.board.vo.BoardVO">
+		
+		INSERT INTO JDBC_BOARD
+			   (BOARD_NO, BOARD_TITLE, BOARD_WRITER, BOARD_DATE, BOARD_CONTENT) 
+		VALUES (BOARD_SEQ.NEXTVAL, #{bdTitle}, #{bdWriter}, TO_DATE(SYSDATE), #{bdContent})
+		
+	</insert>
+	
+	<update id="updateBoard" parameterType="kr.or.ddit.board.vo.BoardVO">
+		
+		UPDATE JDBC_BOARD 
+		SET BOARD_CONTENT = #{bdContent}
+		WHERE BOARD_NO = #{bdNo}
+		
+	</update>
+	
+	<delete id="deleteBoard" parameterType="int">
+		
+		DELETE FROM JDBC_BOARD WHERE BOARD_NO = #{bdNo}
+		
+	</delete>
+	
+	<select id="selectAllBoard" resultType="kr.or.ddit.board.vo.BoardVO">
+		
+		SELECT BOARD_NO BDNO, BOARD_TITLE BDTITLE, BOARD_WRITER BDWRITER, BOARD_CONTENT BDCONTENT 
+		FROM JDBC_BOARD
+		
+	</select>
+	
+	<select id="searchBoard" resultType="kr.or.ddit.board.vo.BoardVO">
+		
+		SELECT BOARD_NO BDNO, BOARD_TITLE BDTITLE, BOARD_WRITER BDWRITER, BOARD_DATE BDDATE, BOARD_CONTENT BDCONTENT 
+		FROM JDBC_BOARD
+		WHERE BOARD_TITLE LIKE #{bdTitle}
+		
+	</select>
+		
+</mapper>

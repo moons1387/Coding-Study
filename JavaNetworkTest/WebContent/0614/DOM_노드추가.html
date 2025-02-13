@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    #parent {
+      /* 웹표준에서 ID 중복은 혀용하지 않으나 스타일은 별도로 에러를 발생시키지 않고 모두 적용시킴
+         하지만 스크립트에서는 예외다... 하나의 ID만 적용대상이 되며, 가장 선순위로 작성된 대상에 한함
+      */
+      border: 2px solid purple;
+    }
+  </style>
+</head>
+</head>
+
+<body>
+  <div id="parent">
+    <span>div안의 span1,</span>
+    <span>div안의 span2,</span>
+    <span>div안의 span3</span>
+  </div>
+
+  <pre>
+  [Node추가]
+  - append(node 또는 DOMString) : 노드 및 DOMString 추가, 여러개 추가, 반환값은 없음
+  - appendChild(node)          : 노드만 추가, 한개씩 추가, 반환값이 있음
+    
+  * DOMString >> 자바스크립트에서 정의한 String, (주의)DOMString으로 요소(태그)정의시 화면상에 태그를 파싱(해석)하지 않고 문자 그대로 표현함...
+
+  [Node제거]
+  - removeChild()
+  - remove()
+
+  [Node복사]
+  - cloneNode(false) : 기본값, 자식노드를 제외하고 속성만 복사
+  - cloneNode(true)  : 자식 및 속성 함께 복사
+  </pre>
+
+  <script>
+    let v_parent = document.querySelector('#parent');
+    let v_child = document.querySelectorAll('span');
+
+    let v_addTxt1 = document.createTextNode("🩷💕");
+    let v_addTxt2 = document.createTextNode("💔❤️‍🔥❤️‍🩹");
+
+    let v_txt = "<span> 태그 적용X</span>"; // DOMString
+    let v_addElem = document.createElement("span");
+
+    // appendChild
+    // let v_rtn = v_addElem.appendChild(v_addTxt1, v_addTxt2); // 두번째 인자 무시.., 반환값 있음
+    // console.log(v_rtn);
+    // v_parent.appendChild(v_txt); // not of type 'Node' 이니까 노드만 사용 가능
+    // v_parent.appendChild(v_addElem); 
+   
+    // append - Node 및 DOMString(문자열로만 표현) 가능, 여러개 추가, 반환값 없음
+    v_addElem.append(v_addTxt1, v_addTxt2, v_txt);
+    v_parent.append(v_addElem);
+    // v_parent.append(v_txt);
+
+    // remove()
+    // v_child[0].remove();
+    
+    // 부모노드.removeChild(자식노드)
+    v_parent.removeChild(v_child[1]);
+
+    // cloneNode(boolean) - default false
+    let clnFalse = v_parent.cloneNode();
+    let clnTrue = v_parent.cloneNode(true);
+    console.log(clnFalse);
+    console.log(clnTrue);
+
+    let v_body = document.querySelector('body');
+
+    v_body.insertAdjacentHTML("beforeend", clnTrue);
+
+    // v_body.appendChild(clnTrue); // 노드만 가능
+    // v_body.append(clnTrue); // 노드와 돔스트링 가능
+    v_body.insertBefore(clnTrue, v_body.firstChild);
+
+    // 최상단 요소가 id의 주인인 걸로 알고있었는데 결과가 다르므로 확인 필요
+    // v_parent.style.borderColor='blue';
+    document.querySelector('#parent').style.borderColor='blue';
+
+  </script>
+</body>
+
+</html>

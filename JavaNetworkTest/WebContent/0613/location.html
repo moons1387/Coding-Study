@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <a href="//naver.com">네이버로 가기</a>
+  <button onclick="location.reload()">새로고침</button>
+  <button" id="replace">replace</button>
+  <script>
+
+    document.querySelector('#replace').addEventListener('click', function(){
+      // 뒤로이동 불가
+      // location.replace('랜덤색_proxy.html');
+
+      // 뒤로이동 가능
+      location.assign('랜덤색_proxy.html');
+
+      /*  herf(assign) vs replace
+
+          herf - 페이지가 '이동'되므로 이전 페이지로도 이동 가능
+                 history에 기록되므로 캐시된 페이지를 보여주거나 서버에 요청하는 구조
+
+          replace - 페이지가 '변경'되기 때문에 이전 페이지로 이동 불가
+                    history에 기록되지 않으며 항상 서버에 페이지를 요청하는 구조
+      */
+    });
+    console.log(location.href);
+    console.log(location.port);
+    console.log(location.hostname);
+
+    //loacation.href, location.assin() 로 문서이동
+    document.querySelector('a').addEventListener('click', function(e){
+      e.preventDefault(); // 이벤트 대상의 기본 기능을 중지
+      // location.href = "//google.com";
+      location.assign('http://www.ddit.or.kr');
+    });
+
+
+
+  </script>
+</body>
+</html>

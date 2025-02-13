@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<input>
+	<button>버튼</button>
+	<div></div>
+<script
+  src="https://code.jquery.com/jquery-3.7.1.js"
+  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
+<script>
+
+	$('button').on('click', function(){
+
+		// jQuery 방식 AJAX
+		$.ajax({
+			type: 'get', // type속성 및 method속성명으로 사용가능하며, get방식은 기본값으로 생략 가능
+// 			url: `test.jsp?sendKey=망고시루`, // 요청을 보낼 서버페이지의 경로 지정
+// 			url: `test.jsp?sendKey=${$('input').val()}`, 
+			url: `/webPro/Ajax?sendKey=${$('input').val()}`, 
+//	 		data: ,
+			success:function(res){
+				console.log("응답>>", typeof res);	
+				$('div').html(res.name);
+			},
+			error:function(xhr){
+				alert("오류상태: ",xhr.status);
+			}
+// 			, dataType: 'text' // 응답이 text일때 생략가능
+// 			, dataType: 'json' // 응답이 text일때 json형식으로 해석하려면서 오류 발생
+			, dataType: 'json' // 응답이 json문자열을 객체로 변환처리해주는 역할
+		})
+		
+	});
+
+
+
+</script>
+</body>
+</html>

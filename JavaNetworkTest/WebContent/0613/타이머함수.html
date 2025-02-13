@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <div>
+
+  </div>
+</head>
+<body>
+  <script>
+    // setTimeout(fn,ms);
+    // 지정된ms가 지나고 함수 호출
+    // 한번만 실행됨
+    // setTimeout(function(){console.log("setTimeout")},2000);
+    setTimeout(f_fnc,2000,'타이머', '함수');
+
+    // setInterval(fn,ms);
+    setInterval(function(){console.log("setInterval")},1000);
+    
+    function f_fnc(param1, param2){
+      alert("함수" + param1 + param2);
+    }
+  </script>
+</body>
+</html>

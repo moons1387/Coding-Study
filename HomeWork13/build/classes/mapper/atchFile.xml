@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="atchFile">
+
+	<insert id="insertAtchFile"
+		parameterType="kr.or.ddit.comm.vo.AtchFileVO">
+
+		<selectKey keyProperty="atchFileId" resultType="long"
+			order="BEFORE">
+			select atch_file_seq.nextval from dual
+		</selectKey>
+
+		insert into atch_file(
+		ATCH_FILE_ID,
+		CREAT_DT,
+		USE_AT)
+		values (
+		#{atchFileId},
+		sysdate,
+		'Y')
+
+	</insert>
+
+	<insert id="insertAtchFileDetail">
+
+		insert into atch_file_detail(
+		ATCH_FILE_ID,
+		FILE_SN,
+		FILE_STRE_COURS,
+		STRE_FILE_NM,
+		ORIGNL_FILE_NM,
+		FILE_EXTSN,
+		FILE_CN,
+		FILE_SIZE)
+		values (
+		#{atchFileId},
+		(SELECT NVL(MAX(FILE_SN), 0) + 1 AS
+		file_sn
+		from atch_file_detail
+		where atch_file_id = #{atchFileId}),
+		#{fileStreCours},
+		#{streFileNm},
+		#{orignlFileNm},
+		#{fileExtsn},
+		#{fileCn},
+		#{fileSize})
+
+	</insert>
+
+	<resultMap type="atchFileVO" id="atchFileMap">
+
+		<id property="atchFileId" column="ATCH_FILE_ID" />
+		<result property="creatDt" column="CREAT_DT" />
+		<result property="useAt" column="USE_AT" />
+		<collection property="atchFileDetailList" resultMap="atchFileDetailMap"/>
+
+	</resultMap>
+	<resultMap type="atchFileDetailVO" id="atchFileDetailMap">
+
+		<id property="atchFileId" column="ATCH_FILE_ID" />
+		<id property="fileSn" column="FILE_SN" />
+		<result property="fileStreCours" column="FILE_STRE_COURS" />
+		<result property="streFileNm" column="STRE_FILE_NM" />
+		<result property="orignlFileNm" column="ORIGNL_FILE_NM" />
+		<result property="fileExtsn" column="FILE_EXTSN" />
+		<result property="fileCn" column="FILE_CN" />
+		<result property="fileSize" column="FILE_SIZE" />
+
+	</resultMap>
+
+	<select id="getAtchFile" resultMap="atchFileMap">
+
+		select * from atch_file a,
+		atch_file_detail b
+		where a.atch_file_id =
+		b.atch_file_id
+		and
+		a.atch_file_id = #{atchFileId}
+
+	</select>
+
+	<select id="getAtchFileDetail" resultMap="atchFileDetailMap">
+
+		select *
+		from atch_file_detail
+		where atch_file_id = #{atchFileId} and file_sn =
+		#{fileSn}
+
+	</select>
+
+</mapper>

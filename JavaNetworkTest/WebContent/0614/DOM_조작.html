@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    div {
+      border-style: solid;
+    }
+    img {
+      width: 100px;
+    }
+  </style>
+</head>
+<body>
+  <input type="button" value="요소추가" id="elemtAdd">
+  <input type="button" value="이미지추가1">
+  <input type="button" value="이미지추가2">
+  <input type="button" value="하이퍼링크추가">
+  
+  <div>
+
+  </div>
+
+  <script>
+
+let v_disp = document.querySelector('div')
+
+    // 요소(하이퍼링크)노드 생성
+    document.querySelector('[value="하이퍼링크추가"]').addEventListener('click', function(){
+      let v_hyperlink = document.createElement('a'); // <a></a>
+      
+      // 메소드로 속성추가
+      // let v_hrefAttr = document.createAttribute('href');
+      // v_hrefAttr.value = "//naver.com";
+      // v_hyperlink.setAttributeNode(v_hrefAttr); // <a href="//naver.com"></a>
+      // v_hyperlink.innerText = "여기가 반드시 있어야됨"; // <a href="//naver.com">여기가 반드시 있어야됨</a>
+      
+      // 점 연산자로 속성 추가
+      v_hyperlink.href = "//google.com"; // <a href="//google.com"></a>
+      v_hyperlink.innerText = "여기가 반드시 있어야됨"; // <a href="//google.com">여기가 반드시 있어야됨</a>
+
+      v_disp.appendChild(v_hyperlink);
+    }); 
+
+
+    // 요소(이미지) 노드 생성2
+    document.querySelectorAll('[type="button"]')[2].addEventListener('click', function(){
+      // DOMString 방식으로 요소 생성하기
+      let v_img = "<img src='../images/bara1.jpg' alt='배라피카츄'>";
+      // v_disp.innerHTML += v_img;
+      v_disp.insertAdjacentHTML("beforeend", v_img);
+    });
+
+    // 요소(이미지) 노드 생성
+    document.querySelectorAll('input')[1].addEventListener('click', function(){
+      let v_img = document.createElement('img'); // <img>
+
+      // 메소드로 속성추가 - 번거로움
+      // let v_srcAttr = document.createAttribute('src');
+      // let v_altAttr = document.createAttribute('alt');
+      // v_srcAttr.value = "../images/lion.jpg";
+      // v_altAttr.value = "대체텍스트";
+      // v_img.setAttributeNode(v_srcAttr);
+      // v_img.setAttributeNode(v_altAttr);
+
+      // 점 연산자로 속성 추가 - 이거 더 많이 씀
+      v_img.src = '../images/ala.jpg'; // <img src ='~'>
+      v_img.alt = '대체텍스트'; // <img src='~' alt='~'>
+      v_img.width = 150; // <img src='~' alt='~' width='150px'>
+      // v_img.style.width = "100px"
+      // v_img.setAttribute('width', '50px');
+
+      v_disp.appendChild(v_img);
+
+    });
+
+    // 요소 노드 생성 및 추가하기
+    document.querySelector('#elemtAdd').addEventListener('click', function(){
+    
+    // h4 요소노드 생성
+    let v_h4 = document.createElement('h4'); // <h4></h4>
+    
+    // 요소노드에 추가할 텍스트노드 생성
+    let v_txt = document.createTextNode('abd😍😍웡카');
+
+    v_h4.append(v_txt); // <h4>abd😍😍웡카</h4>
+
+    // 영역에 생성된 요소노드 추가
+    v_disp.append(v_h4);
+
+
+
+    });
+
+  </script>
+
+</body>
+</html>

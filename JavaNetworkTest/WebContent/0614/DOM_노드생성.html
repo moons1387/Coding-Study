@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    div {
+      border: 2px solid gold;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="parent">
+    <span>div안의 span1,</span>
+    <span>div안의 span2,</span>
+    <span>div안의 span3</span>
+  </div>
+
+  <pre>
+  [Node정보]
+  - createElement()
+  - createAttribute()
+  - createTextNode()
+
+  [Node추가]
+  - appendChild(node)                  : 노드리스트의 마지막에 추가
+  - insertBefore(node, 위치)            : 위치 앞쪽에 추가, 위치 null일때 appendChild와 동일
+  - insertAdjacentElement(위치, element): 
+  - insertDate(offset, data)           : 
+  - deleteDate(offset, 삭제할 갯수)       : 
+
+  </pre>
+
+  <script>
+    let v_parent = document.querySelector('#parent');
+    let v_child = document.querySelectorAll('span');
+
+    // 요소노드 생성
+    let tagP = document.createElement("p"); // <p></p>
+    // console.log(tagP);
+    
+    // 속성노드 생성
+    let addAttr = document.createAttribute("title"); // title=
+    addAttr.value =  "타이틀 속성의 값";
+    // console.log(addAttr);
+
+    // 속성노드를 요소노드에 추가하기
+    tagP.setAttributeNode(addAttr);
+    // console.log(tagP);
+
+    // 텍스트노드 생성
+    let addTxt = document.createTextNode('아무거낳ㅎ');
+    // console.log(addTxt);
+
+    // 텍스트노드를 요소노드에 추가하기
+    tagP.appendChild(addTxt);
+    // console.log(tagP);
+
+    // 완성된 요소 부모영역에 추가하기
+    // v_parent.appendChild(tagP);
+    // v_parent.insertBefore(tagP,null); // appendChild와 같이 영역의 마지막에 추가
+    // v_parent.insertBefore(tagP,v_parent.children[1]);
+    // v_parent.insertAdjacentElement("afterend", tagP);
+    
+    // 텍스트노드에 새로운 텍스트 추가/삭제
+    // 부모기준점에서 마지막 자식요소(div안 span3)에 접근하기
+    // console.log(v_parent.children[2]);
+    
+    // 자식기준점에서 마지막 요소(div안 span3)에 접근하기
+    // console.log(v_child[2]);
+    
+    let lastChild = v_parent.lastElementChild;
+    lastChild.firstChild.insertData(3, "(DIV)"); // div(DIV)안의 span3
+    lastChild.firstChild.deleteData(0,3); // div안의 span3
+
+    lastChild.firstChild.insertData(8, "스팬3"); // div안의 스팬3span3
+    lastChild.firstChild.deleteData(11, 5); // div안의 스팬3
+
+    lastChild.textContent = "쉽게 바꿈1";
+    lastChild.firstChild.nodeValue = "쉽게 바꿈2";
+
+  </script>
+</body>
+
+</html>

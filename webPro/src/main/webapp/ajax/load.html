@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	#d1 {
+		border: 2px solid red;
+	}
+	#d2 {
+		border: 2px solid blue;
+	}
+</style>
+</head>
+<body>
+	<input id="userId">
+	<input id="userPw" type="passward">
+	<button>버튼</button>
+
+	<div id="d1"></div>
+	<div id="d2"></div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
+<script>
+	
+	// load(url, data, cb): 서버로부터 응답받은 데이터를 선택된 html요소 콘텐츠로 대체
+	// ajax()보다 간소화된 비동기 호출 메소드
+	
+	
+	$('button').on('click', function(){
+		let data = `uId=${$('#userId').val()}&uPw=${$('#userPw').val()}`;
+		$('#d1').load('loadTest.jsp', data, cb);
+	});
+	
+	function cb(a,b,c){ // 첫번째 인자로 응답결과 받음, 두번째 인자로 상태문자값, 세번째 인자는 xhr
+		$('#d2').html(JSON.parse(a).rst); // 문자열 => 객체
+		alert(b); //rst
+		alert(c.status); // 상태코드값
+		alert(c.statusText); // 상태문자값
+	}
+	
+</script>
+</body>
+</html>

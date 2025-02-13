@@ -1,0 +1,2 @@
+2024-06-12 14:35:01.763 [main] DEBUG - 쿼리문 :  insert into MYMEMBER(mem_id, mem_name, mem_tel, mem_addr) 
+ values (?, ?, ?, ?) 
